@@ -2,10 +2,11 @@
 <com.aezhkov.flickrsearch.presentation.feature.search.view.items.PhotoItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
         android:id="@+id/photo_item_image" />
 </com.aezhkov.flickrsearch.presentation.feature.search.view.items.PhotoItemView>

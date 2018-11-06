@@ -10,5 +10,10 @@ class SearchPhotoRepositoryImpl
     private val photosApi: PhotosApi
 ) : SearchPhotoRepository {
 
-    override fun searchByName(text: String): Single<List<PhotoInfo>> = photosApi.searchPhotos(text)
+    override fun searchByName(text: String): Single<List<PhotoInfo>> {
+        return photosApi.searchPhotos(text)
+            .map {
+                it.photos.photo
+            }
+    }
 }

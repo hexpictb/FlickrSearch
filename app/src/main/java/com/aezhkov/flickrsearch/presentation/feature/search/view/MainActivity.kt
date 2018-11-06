@@ -27,10 +27,10 @@ class MainActivity : MvpAppCompatActivity(), SearchPhotoView {
     private val photoGridList by bind<RecyclerView>(R.id.search_photo_list)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         val app = application as FlickrSearchApp
         app.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         photoGridList.adapter = photosAdapter
         photoGridList.layoutManager = GridLayoutManager(this, 3)
     }

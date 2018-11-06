@@ -3,6 +3,9 @@ package com.aezhkov.flickrsearch
 import android.app.Application
 import com.aezhkov.flickrsearch.presentation.di.AppComponent
 import com.aezhkov.flickrsearch.presentation.di.DaggerAppComponent
+import com.facebook.stetho.Stetho
+
+
 
 class FlickrSearchApp : Application() {
 
@@ -10,5 +13,10 @@ class FlickrSearchApp : Application() {
         DaggerAppComponent.builder()
 
             .build()
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        Stetho.initializeWithDefaults(this)
     }
 }

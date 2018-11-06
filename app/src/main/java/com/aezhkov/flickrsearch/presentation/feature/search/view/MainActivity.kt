@@ -3,6 +3,7 @@ package com.aezhkov.flickrsearch.presentation.feature.search.view
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.aezhkov.flickrsearch.FlickrSearchApp
 import com.aezhkov.flickrsearch.R
 import com.aezhkov.flickrsearch.domain.model.search.PhotoItemModel
 import com.aezhkov.flickrsearch.presentation.base.adapter.BindAdapter
@@ -28,7 +29,8 @@ class MainActivity : MvpAppCompatActivity(), SearchPhotoView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val app = application as FlickrSearchApp
+        app.appComponent.inject(this)
         photoGridList.adapter = photosAdapter
         photoGridList.layoutManager = GridLayoutManager(this, 3)
     }

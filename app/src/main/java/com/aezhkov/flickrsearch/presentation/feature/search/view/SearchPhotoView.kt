@@ -7,4 +7,8 @@ interface SearchPhotoView : MvpView {
 
     fun updateItemsList(items: List<PhotoItemModel>)
 
+    fun showError(throwable: Throwable)
+
+    fun showSuggest(items:List<String>)
+
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aezhkov.flickrsearch.presentation.base.view.PopupItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/popup_item_title"
+        android:textColor="@android:color/black"
+        android:layout_height="wrap_content" />
+
+</com.aezhkov.flickrsearch.presentation.base.view.PopupItemView>

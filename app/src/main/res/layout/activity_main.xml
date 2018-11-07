@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
     tools:context=".presentation.feature.search.view.MainActivity">
 
     <EditText
         android:id="@+id/search_photo_text"
         android:layout_width="match_parent"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView

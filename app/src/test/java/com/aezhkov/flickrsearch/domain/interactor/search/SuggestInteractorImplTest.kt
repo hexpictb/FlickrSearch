@@ -21,4 +21,18 @@ class SuggestInteractorImplTest {
         testObserver.assertResult(emptyList())
         verify { storage.getList(any()) }
     }
+
+    @Test
+    fun `should get current list, and new item and store it`() {
+        every { storage.getList(any()) } returns listOf("one")
+        every { storage.saveList(any(), any()) } returns Unit
+
+        val testObserver = interactor.saveAsSuggest("two").test()
+
+        testObserver.assertComplete()
+        testObserver.assertResult(Unit)
+
+        verify { storage.getList(any()) }
+        verify { storage.saveList(any(), listOf("two", "one")) }
+    }
 }

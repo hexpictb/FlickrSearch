@@ -67,13 +67,6 @@ class MainActivity : MvpAppCompatActivity(), SearchPhotoView {
                 else -> false
             }
         }
-        textEditView.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                popupWindow.showAsDropDown(textEditView, 0, 0)
-            } else {
-                popupWindow.dismiss()
-            }
-        }
     }
 
     override fun updateItemsList(items: List<PhotoItemModel>) {

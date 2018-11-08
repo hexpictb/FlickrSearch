@@ -1,6 +1,7 @@
 package com.aezhkov.flickrsearch.presentation.base.view
 
 import android.content.Context
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
@@ -24,9 +25,11 @@ class PopupView
 
         popupListView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         popupListView.adapter = popupAdapter
+        popupListView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     override fun bind(model: List<String>) {
+        items = model
         popupAdapter.setItems(model)
         popupAdapter.notifyDataSetChanged()
     }

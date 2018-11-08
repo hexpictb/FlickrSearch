@@ -5,7 +5,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -14,7 +13,7 @@ import com.aezhkov.flickrsearch.FlickrSearchApp
 import com.aezhkov.flickrsearch.R
 import com.aezhkov.flickrsearch.domain.model.search.PhotoItemModel
 import com.aezhkov.flickrsearch.presentation.base.adapter.BindAdapter
-import com.aezhkov.flickrsearch.presentation.base.adapter.BindableView
+import com.aezhkov.flickrsearch.presentation.base.view.PopupView
 import com.aezhkov.flickrsearch.presentation.feature.search.presenter.SearchPhotoPresenter
 import com.aezhkov.flickrsearch.presentation.utils.bind
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -34,8 +33,21 @@ class MainActivity : MvpAppCompatActivity(), SearchPhotoView {
     private val photosAdapter = BindAdapter<PhotoItemModel>(R.layout.photo_item_view)
     private val photoGridList by bind<RecyclerView>(R.id.search_photo_list)
     private val textEditView by bind<EditText>(R.id.search_photo_text)
-    lateinit var popupWindow: PopupWindow
-    lateinit var popupView: BindableView<List<String>>
+    private val popupWindow by lazy {
+        PopupWindow(this).apply {
+            width = textEditView.width
+            height = 300
+            contentView = LayoutInflater.from(this@MainActivity).inflate(R.layout.popup_view, null).also {
+                popupView = it as PopupView
+                popupView.setOnItemClickListener { item ->
+                    presenter.suggestSelected(item)
+                    dismiss()
+                }
+            }
+            setBackgroundDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.gray_shape))
+        }
+    }
+    lateinit var popupView: PopupView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val app = application as FlickrSearchApp
@@ -55,24 +67,13 @@ class MainActivity : MvpAppCompatActivity(), SearchPhotoView {
                 else -> false
             }
         }
-        initPopupView()
-//        textEditView.setOnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) {
-//                popupWindow.showAsDropDown(textEditView, 0, 0)
-//            } else {
-//                popupWindow.dismiss()
-//            }
-//        }
-    }
-
-    private fun initPopupView() {
-        popupWindow = PopupWindow(this)
-        popupWindow.width = textEditView.width
-        val view = LayoutInflater.from(this).inflate(R.layout.popup_view, null)
-        popupView = view as BindableView<List<String>>
-        popupWindow.height = 300
-        popupWindow.contentView = view
-        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.gray_shape))
+        textEditView.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                popupWindow.showAsDropDown(textEditView, 0, 0)
+            } else {
+                popupWindow.dismiss()
+            }
+        }
     }
 
     override fun updateItemsList(items: List<PhotoItemModel>) {
@@ -85,12 +86,9 @@ class MainActivity : MvpAppCompatActivity(), SearchPhotoView {
     }
 
     override fun showSuggest(items: List<String>) {
-        popupView.bind(items)
         textEditView.post {
             popupWindow.showAsDropDown(textEditView, 0, 0)
-        }
-
-        if (textEditView.hasFocus()) {
+            popupView.bind(items)
         }
     }
 }

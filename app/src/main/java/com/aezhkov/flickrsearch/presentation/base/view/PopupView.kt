@@ -17,6 +17,7 @@ class PopupView
     private val popupListView by bind<RecyclerView>(R.id.popup_view_list)
 
     private val popupAdapter = BindAdapter<String>(R.layout.popup_item_view)
+    private var items: List<String>? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -28,5 +29,9 @@ class PopupView
     override fun bind(model: List<String>) {
         popupAdapter.setItems(model)
         popupAdapter.notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(block: (String) -> Unit) {
+        popupListView.addItemClickListener { _, position -> items?.let { block(it[position]) } }
     }
 }

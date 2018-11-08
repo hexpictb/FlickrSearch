@@ -28,12 +28,7 @@ class SearchPhotoPresenter
     }
 
     fun textInputted(text: String) {
-        disposable.add(
-            searchIterator.searchPhoto(text)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.updateItemsList(it) }, { viewState.showError(it) })
-        )
+        searchPhotoByText(text)
         disposable.add(
             suggestInteractor.saveAsSuggest(text)
                 .flatMap { suggestInteractor.getSuggests() }
@@ -47,5 +42,18 @@ class SearchPhotoPresenter
     override fun onDestroy() {
         super.onDestroy()
         disposable.clear()
+    }
+
+    fun suggestSelected(suggest: String) {
+        searchPhotoByText(suggest)
+    }
+
+    private fun searchPhotoByText(text: String) {
+        disposable.add(
+            searchIterator.searchPhoto(text)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ viewState.updateItemsList(it) }, { viewState.showError(it) })
+        )
     }
 }

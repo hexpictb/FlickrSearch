@@ -26,7 +26,8 @@ class SearchPhotoInteractorImplTest {
         val testObserver = interactor.searchPhoto("test query").test()
 
         val expectedModel = PhotoItemModel(
-            photoUrl = "https://farmfarm.staticflickr.com/server/id_secret_s.jpg"
+            photoUrlSmall = "https://farmfarm.staticflickr.com/server/id_secret_s.jpg",
+            photoUrlMedium = "https://farmfarm.staticflickr.com/server/id_secret_b.jpg"
         )
         testObserver.assertComplete()
         testObserver.assertResult(listOf(expectedModel))

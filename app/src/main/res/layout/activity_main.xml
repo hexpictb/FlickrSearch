@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     tools:context=".presentation.feature.search.view.MainActivity">
 
     <EditText
@@ -13,12 +15,20 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:layout_height="wrap_content" />
-
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
-        android:id="@+id/search_photo_list"
-        android:layout_height="0dp" />
+        android:layout_height="0dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/search_photo_list"
+            android:layout_height="match_parent" />
+        <ProgressBar
+            android:id="@+id/search_photo_progress"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 </LinearLayout>

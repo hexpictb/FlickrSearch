@@ -9,6 +9,13 @@ interface SearchPhotoView : MvpView {
 
     fun showError(throwable: Throwable)
 
-    fun showSuggest(items:List<String>)
+    fun showSuggest(items: List<String>)
 
+    fun showProgress()
+
+    fun hideProgress()
+
+    fun openDetails(model: PhotoItemModel)
+
+    fun updateSuggest(list: List<String>)
 }

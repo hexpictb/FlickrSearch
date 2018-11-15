@@ -2,6 +2,7 @@ package com.aezhkov.flickrsearch.presentation.di
 
 import com.aezhkov.flickrsearch.data.di.DataModule
 import com.aezhkov.flickrsearch.domain.di.DomainModule
+import com.aezhkov.flickrsearch.presentation.feature.details.view.DetailsActivity
 import com.aezhkov.flickrsearch.presentation.feature.search.view.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -13,4 +14,6 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(activity: MainActivity)
+
+    fun inject(activity: DetailsActivity)
 }

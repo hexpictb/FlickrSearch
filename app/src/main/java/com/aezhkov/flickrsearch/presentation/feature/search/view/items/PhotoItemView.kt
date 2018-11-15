@@ -17,6 +17,6 @@ class PhotoItemView
     private val photoImageView by bind<ImageView>(R.id.photo_item_image)
 
     override fun bind(model: PhotoItemModel) {
-        Glide.with(this).load(model.photoUrl).into(photoImageView)
+        Glide.with(this).load(model.photoUrlSmall).into(photoImageView)
     }
 }

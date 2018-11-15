@@ -2,6 +2,7 @@ package com.aezhkov.flickrsearch.presentation.feature.search.presenter
 
 import com.aezhkov.flickrsearch.domain.interactor.search.SearchPhotoInteractor
 import com.aezhkov.flickrsearch.domain.interactor.search.SuggestInteractor
+import com.aezhkov.flickrsearch.domain.model.search.PhotoItemModel
 import com.aezhkov.flickrsearch.presentation.feature.search.view.SearchPhotoView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -23,7 +24,11 @@ class SearchPhotoPresenter
             suggestInteractor.getSuggests()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.showSuggest(it) }, {})
+                .subscribe({
+                    if (it.isNotEmpty()) {
+                        viewState.showSuggest(it)
+                    }
+                }, {})
         )
     }
 
@@ -34,7 +39,7 @@ class SearchPhotoPresenter
                 .flatMap { suggestInteractor.getSuggests() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.showSuggest(it) }, { })
+                .subscribe({ viewState.updateSuggest(it) }, { })
         )
         viewState.updateItemsList(listOf())
     }
@@ -49,11 +54,19 @@ class SearchPhotoPresenter
     }
 
     private fun searchPhotoByText(text: String) {
+        viewState.showProgress()
         disposable.add(
             searchIterator.searchPhoto(text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.updateItemsList(it) }, { viewState.showError(it) })
+                .subscribe({
+                    viewState.updateItemsList(it)
+                    viewState.hideProgress()
+                }, { viewState.showError(it) })
         )
+    }
+
+    fun itemClick(model: PhotoItemModel) {
+        viewState.openDetails(model)
     }
 }

@@ -1,5 +1,8 @@
 package com.aezhkov.flickrsearch.domain.model.search
 
+import java.io.Serializable
+
 data class PhotoItemModel(
-    val photoUrl: String
-)
+    val photoUrlSmall: String,
+    val photoUrlMedium: String
+) : Serializable
